@@ -1,9 +1,6 @@
 package com.arthur.dev.spring.micro.apigateway;
 
-import com.netflix.discovery.EurekaClient;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.configuration.web.ServletConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
