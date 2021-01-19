@@ -1,5 +1,6 @@
 package com.arthur.dev.spring.micro.apigateway;
 
+import com.arthur.dev.spring.micro.apigateway.filter.AuthenticationFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -14,20 +15,20 @@ import org.springframework.context.annotation.Bean;
 @EnableEurekaClient
 public class ApigatewayApplication {
 
-
 	@Value("${server.servlet.context-path}")
 	private String contextPath;
 
 	@Bean
-	public RouteLocator myRoutes(RouteLocatorBuilder builder){
-		String personServiceRegex = contextPath +"\\/persons\\/(?<segment>.*)";
-		String personServiceReplace = "/${segment}";
+	public RouteLocator myRoutes(RouteLocatorBuilder builder, AuthenticationFilter authenticationFilter){
+		String userServiceRegex = contextPath +"\\/users\\/(?<segment>.*)";
+		String userServiceReplace = "/${segment}";
 
 		return builder.routes()
 				.route(p -> p
-						.path(contextPath + "/persons/**")
-						.filters( f -> f.rewritePath(personServiceRegex, personServiceReplace))
-						.uri("lb://PERSONS/"))
+						.path(contextPath + "/users/**")
+						.filters( f -> f.rewritePath(userServiceRegex, userServiceReplace).filter(authenticationFilter.))
+						.uri("lb://USERS/"))
+				.route( p -> p.path(contextPath + "/login").uri("lb://AUTH/"))
 				.build();
 	}
 
