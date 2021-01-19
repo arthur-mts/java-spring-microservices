@@ -13,10 +13,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan({"com.arthur.dev.spring.micro.core.model"})
 @EnableJpaRepositories({"com.arthur.dev.spring.micro.core.repository"})
 @EnableEurekaClient
-public class DemoApplication {
+public class PersonsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run(PersonsApplication.class, args);
     }
 
 }

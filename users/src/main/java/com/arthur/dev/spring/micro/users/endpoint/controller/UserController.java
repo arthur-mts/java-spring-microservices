@@ -1,7 +1,7 @@
-package com.arthur.dev.spring.micro.persons.endpoint.controller;
+package com.arthur.dev.spring.micro.users.endpoint.controller;
 
-import com.arthur.dev.spring.micro.core.model.Person;
-import com.arthur.dev.spring.micro.persons.endpoint.service.PersonService;
+import com.arthur.dev.spring.micro.core.model.User;
+import com.arthur.dev.spring.micro.users.endpoint.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,20 +11,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
-@RequestMapping("/api/v1/persons")
-public class PersonController {
-    private final PersonService personService;
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequestMapping("/api/v1/users")
+public class UserController {
 
+    private final UserService userService;
+
+    
     @PostMapping
-    public void signUp(@RequestBody Person person){
-        person.set
+    public void signUp(@RequestBody User user){
+        userService.save(user);
     }
 
 
     @GetMapping
-    public ResponseEntity<Iterable<Person>> list(Pageable pageable) {
-        return new ResponseEntity<Iterable<Person>>(personService.list(pageable), HttpStatus.OK);
+    public ResponseEntity<Iterable<User>> list(Pageable pageable) {
+        return new ResponseEntity<Iterable<User>>(userService.list(pageable), HttpStatus.OK);
     }
 }

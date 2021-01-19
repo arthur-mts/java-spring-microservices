@@ -10,9 +10,9 @@
     </parent>
 
 
-    <artifactId>persons</artifactId>
+    <artifactId>users</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>persons</name>
+    <name>users</name>
     <description>Application with Spring Boot and Microservices</description>
 
     <properties>
@@ -28,7 +28,7 @@
     </dependencies>
 
     <build>
-        <finalName>persons</finalName>
+        <finalName>users</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

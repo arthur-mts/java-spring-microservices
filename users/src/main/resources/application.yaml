@@ -13,7 +13,7 @@ eureka:
 
 spring:
   application:
-    name: persons
+    name: users
   jpa:
     show-sql: false
     hibernate:
