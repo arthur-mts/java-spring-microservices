@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.access.expression.SecurityExpressionHandler;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -51,23 +52,14 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            .authorizeRequests()
-            .and()
             .csrf().disable()
-
             .authorizeRequests()
             .antMatchers(HttpMethod.POST, jwtConfig.getLoginUrl())
                 .permitAll()
                 .and()
                 .addFilter(
                         new JWTEmailAndPassAuthenticationFilter
-                            (authenticationManager(), jwtConfig))
-
-            .authorizeRequests()
-            .anyRequest()
-                .authenticated()
-                .and()
-                .addFilter(new JWTEmailAndPassAuthorizationFilter(authenticationManager(), jwtConfig));
+                            (authenticationManager(), jwtConfig));
     }
     
 

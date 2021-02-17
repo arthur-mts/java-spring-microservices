@@ -18,8 +18,13 @@ public class UserController {
 
     private final UserService userService;
 
-    
-    @PostMapping
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity handler(Exception ex) {
+        return com.arthur.dev.spring.micro.core.exceptions.ExceptionHandler.handle(ex);
+    }
+
+    @PostMapping("/signin")
     public void signUp(@RequestBody User user){
         userService.save(user);
     }

@@ -13,7 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -32,6 +32,7 @@ public class JWTEmailAndPassAuthenticationFilter extends UsernamePasswordAuthent
 
     private final AuthenticationManager authenticationManager;
 
+
     private JwtConfig jwtConfig;
 
     public JWTEmailAndPassAuthenticationFilter(AuthenticationManager authenticationManager, JwtConfig jwtConfig) {
@@ -44,10 +45,11 @@ public class JWTEmailAndPassAuthenticationFilter extends UsernamePasswordAuthent
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
         Authentication authentication = attemptAuthentication((HttpServletRequest) request, (HttpServletResponse) response);
         successfulAuthentication((HttpServletRequest)request,(HttpServletResponse) response, chain, authentication);
     }
+
+
 
     @SneakyThrows
     @Override
@@ -63,13 +65,14 @@ public class JWTEmailAndPassAuthenticationFilter extends UsernamePasswordAuthent
 
         var usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(credentials.getEmail(), credentials.getPassword(), Collections.emptyList());
 
-        Authentication authentication = authenticationManager.  authenticate(usernamePasswordAuthenticationToken);
+        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
         return authentication;
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
+
         String token = JWT.create().withSubject(
                 ((UserDetails) authResult.getPrincipal()).getUsername())
                 .withExpiresAt(
