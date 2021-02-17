@@ -26,4 +26,4 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/microservicesdatabase?allowPublicKeyRetrival=true?sslMode=DISABLED
     username: root
-    password: admin
+    password: root
